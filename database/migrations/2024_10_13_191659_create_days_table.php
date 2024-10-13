@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('days', function (Blueprint $table) {
             $table->id();
             $table->timestamp('created_at');
-            $table->timestamp('ends_at');
+            $table->timestamp('ends_at')->nullable(true);
         });
     }
 

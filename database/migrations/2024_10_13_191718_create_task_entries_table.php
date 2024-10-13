@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Task::class);
             $table->timestamp('created_at');
-            $table->timestamp('ends_at');
+            $table->timestamp('ends_at')->nullable(true);
         });
     }
 
