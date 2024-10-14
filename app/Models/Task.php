@@ -10,5 +10,12 @@ class Task extends Model
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'scheduled_on',
+        'priority'
+    ];
+
     public $timestamps = false;
 }

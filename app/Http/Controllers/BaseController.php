@@ -13,24 +13,33 @@ class BaseController extends Controller
 
     public function create(Request $request)
     {
-        $model = new $this->model;
+        $data = [];
 
         // TODO: validate input
 
         foreach ($this->editable_attributes as $attribute) {
-            $model[$attribute] = $request[$attribute];
+            $data[$attribute] = $request->input($attribute);
         }
 
-        $model->save();
+        $this->model::create($data);
 
         return response(null, 200);
     }
 
-    public function update()
+    public function update(Request $request, int $id)
     {
-        // get input of attributes from $editable_attributes 
+        $model = $this->model::findOrFail($id);
+        $data = [];
         // validate input 
-        // find the model
-        // update the model
+
+        foreach ($this->editable_attributes as $attribute) {
+            if ($request->has($attribute)) {
+                $data[$attribute] = $request->input($attribute);
+            }
+        }
+
+        $model->update($data);
+
+        return response(null, 200);
     }
 }
