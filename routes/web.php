@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskEntryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', function () {
@@ -14,4 +15,10 @@ Route::controller(TaskController::class)->group(function () {
     Route::post('/tasks', 'create');
     Route::patch('/tasks/{id}', 'update');
     Route::delete('/tasks/{id}', 'delete');
+});
+
+Route::controller(TaskEntryController::class)->group(function () {
+    Route::get('/tasks/{task_id}/entries', 'index');
+    Route::post('/tasks/{task_id}/entries', 'create');
+    Route::patch('/entries/{id}/stop', 'stopEntry');
 });
