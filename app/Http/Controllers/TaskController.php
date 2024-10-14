@@ -15,17 +15,4 @@ class TaskController extends BaseController
     ];
 
     protected $model = Task::class;
-
-    public function index()
-    {
-        return Task::paginate(25);
-    }
-
-    public function show($id)
-    {
-        return Task::find($id);
-    }
-
-    // Delete an existing task 
-    public function delete() {}
 }

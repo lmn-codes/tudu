@@ -11,6 +11,16 @@ class BaseController extends Controller
     protected $editable_attributes = [];
     protected $model = Model::class;
 
+    public function index()
+    {
+        return $this->model::paginate(25);
+    }
+
+    public function show($id)
+    {
+        return $this->model::findOrFail($id);
+    }
+
     public function create(Request $request)
     {
         $data = [];
@@ -41,5 +51,10 @@ class BaseController extends Controller
         $model->update($data);
 
         return response(null, 200);
+    }
+
+    public function delete(int $id)
+    {
+        $this->model::destroy($id);
     }
 }
