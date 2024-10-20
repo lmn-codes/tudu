@@ -11,6 +11,8 @@ class Day extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function day_task(): HasMany
     {
         return $this->hasMany(DayTask::class);

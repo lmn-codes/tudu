@@ -15,7 +15,7 @@ class DayController extends Controller
     public function create(Request $request)
     {
         $now = Carbon::now();
-        $existing_day = Day::whereDate('created_at', $now->toDateString());
+        $existing_day = Day::whereDate('created_at', $now->toDateString())->first();
 
         if ($existing_day) {
             return response()->json([
@@ -26,8 +26,8 @@ class DayController extends Controller
         $day = Day::create();
 
         DB::beginTransaction();
-        foreach ($request->tasks as $task) {
-            $task = Task::find($task->id);
+        foreach ($request->tasks as $request_task) {
+            $task = Task::find($request_task['id']);
 
             if (!$task) {
                 DB::rollBack();
@@ -36,12 +36,14 @@ class DayController extends Controller
 
             $day_task = DayTask::create([
                 'day_id' => $day->id,
-                'task_id' => $task->id,
-                'priority' => $task->priority
+                'task_id' => $request_task['id'],
+                'priority' => $request_task['priority'] ?? null
             ]);
 
             $day_task->save();
         }
         DB::commit();
+
+        return response(null, 200);
     }
 }

@@ -11,6 +11,10 @@ class DayTask extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['day_id', 'task_id', 'priority'];
+
+    public $timestamps = false;
+
     public function day(): BelongsTo
     {
         return $this->belongsTo(Day::class);

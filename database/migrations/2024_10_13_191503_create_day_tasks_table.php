@@ -14,9 +14,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('day_tasks', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Task::class);
             $table->foreignIdFor(Day::class);
-            $table->integer('priority');
+            $table->integer('priority')->nullable();
             $table->unique('task_id', 'day_id');
         });
     }
