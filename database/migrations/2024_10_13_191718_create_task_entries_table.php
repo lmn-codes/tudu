@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Task::class);
             $table->timestamp('created_at')->default(Carbon::now());
-            $table->timestamp('ends_at')->nullable(true);
+            $table->timestamp('ends_at')->nullable();
         });
     }
 

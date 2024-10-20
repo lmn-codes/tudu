@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Task extends Model
 {
@@ -23,5 +25,15 @@ class Task extends Model
     public function entries(): HasMany
     {
         return $this->hasMany(TaskEntry::class);
+    }
+
+    public function day_task(): BelongsTo
+    {
+        return $this->belongsTo(DayTask::class);
+    }
+
+    public function day(): Day
+    {
+        return $this->dayTask()->day();
     }
 }

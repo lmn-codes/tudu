@@ -15,10 +15,10 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title', 250);
-            $table->text('description')->nullable(true);
+            $table->text('description')->nullable();
             $table->enum('status', ['done', 'in_progress', 'cold'])->default('cold');
             $table->timestamp('created_at')->default(Carbon::now());
-            $table->timestamp('scheduled_on')->nullable(true);
+            $table->timestamp('scheduled_on')->nullable();
             $table->integer('priority');
         });
     }
