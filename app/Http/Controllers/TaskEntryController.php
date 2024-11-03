@@ -24,7 +24,7 @@ class TaskEntryController extends Controller
 
     public function stopEntry(int $id)
     {
-        $entry = TaskEntry::find($id);
+        $entry = TaskEntry::findOrFail($id);
 
         $entry->ends_at = Carbon::now();
 

@@ -35,10 +35,11 @@ class DayController extends Controller
             }
 
             $day_task = DayTask::create([
-                'day_id' => $day->id,
-                'task_id' => $request_task['id'],
                 'priority' => $request_task['priority'] ?? null
             ]);
+
+            $task->day_task()->save($day_task);
+            $day->day_tasks()->save($day_task);
 
             $day_task->save();
         }

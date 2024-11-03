@@ -27,9 +27,9 @@ class Task extends Model
         return $this->hasMany(TaskEntry::class);
     }
 
-    public function day_task(): BelongsTo
+    public function day_task(): HasOne
     {
-        return $this->belongsTo(DayTask::class);
+        return $this->hasOne(DayTask::class);
     }
 
     public function day(): Day

@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DayTask extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['day_id', 'task_id', 'priority'];
+    protected $fillable = ['priority'];
 
     public $timestamps = false;
 
@@ -20,8 +20,8 @@ class DayTask extends Model
         return $this->belongsTo(Day::class);
     }
 
-    public function tasks(): HasMany
+    public function task(): BelongsTo
     {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Task::class);
     }
 }
