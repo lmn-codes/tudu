@@ -23,9 +23,9 @@ class DayController extends Controller
             ], 400);
         }
 
+        DB::beginTransaction();
         $day = Day::create();
 
-        DB::beginTransaction();
         foreach ($request->tasks as $request_task) {
             $task = Task::find($request_task['id']);
 
@@ -34,14 +34,11 @@ class DayController extends Controller
                 throw new ModelNotFoundException();
             }
 
-            $day_task = DayTask::create([
+            DayTask::create([
+                'day_id' => $day->id,
+                'task_id' => $request_task['id'],
                 'priority' => $request_task['priority'] ?? null
             ]);
-
-            $task->day_task()->save($day_task);
-            $day->day_tasks()->save($day_task);
-
-            $day_task->save();
         }
         DB::commit();
 

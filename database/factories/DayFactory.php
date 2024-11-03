@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Day>
  */
-class TaskFactory extends Factory
+class DayFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->text(50),
-            'description' => fake()->text(100),
-            'priority' => fake()->unique()->randomNumber()
+            'created_at' => now()
         ];
     }
 }

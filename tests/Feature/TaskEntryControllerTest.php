@@ -11,8 +11,7 @@ class TaskEntryControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function itCanStopAnEntry(): void
+    public function test_stop_entry(): void
     {
         $entry = TaskEntry::factory()->create();
 
