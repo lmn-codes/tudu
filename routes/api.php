@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DayController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskEntryController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
