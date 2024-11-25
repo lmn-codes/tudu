@@ -21,9 +21,9 @@ class BaseController extends Controller
         return $this->model::findOrFail($id);
     }
 
-    public function create(Request $request)
+    public function create(Request $request, ?array $initial_data = [])
     {
-        $data = [];
+        $data = $initial_data;
 
         // TODO: validate input
 
@@ -40,7 +40,7 @@ class BaseController extends Controller
     {
         $model = $this->model::findOrFail($id);
         $data = [];
-        // validate input 
+        // validate input
 
         foreach ($this->editable_attributes as $attribute) {
             if ($request->has($attribute)) {

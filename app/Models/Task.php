@@ -17,7 +17,7 @@ class Task extends Model
         'title',
         'description',
         'scheduled_on',
-        'priority'
+        'position'
     ];
 
     public $timestamps = false;

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('title', 250);
             $table->text('description')->nullable();
             $table->enum('status', ['done', 'in_progress', 'cold'])->default('cold');
+            $table->integer('position')->unique();
             $table->timestamp('created_at')->default(Carbon::now());
             $table->timestamp('scheduled_on')->nullable();
-            $table->integer('priority');
         });
     }
 
