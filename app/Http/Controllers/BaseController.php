@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\stringStartsWith;
 
 class BaseController extends Controller
 {
@@ -14,6 +14,19 @@ class BaseController extends Controller
 
     public function index(Request $request)
     {
+        $query = $this->buildSortQuery($request, $this->model::query());
+
+        return response()->json($query->paginate(25));
+    }
+
+    private function buildSortQuery(Request $request, Builder $query): Builder | Response
+    {
+        $sort_request_query = $request->query('sort');
+
+        if(is_null($sort_request_query)) {
+            return $query;
+        }
+
         $sort_attributes = explode( ',', $request->query('sort', ''));
         $query = $this->model::query();
 
@@ -22,13 +35,11 @@ class BaseController extends Controller
 
             if (in_array($attribute_name, $this->model::$sortable)) {
                 $is_descending = str_starts_with($attribute, '-');
-                $query->orderBy($attribute_name, $is_descending ? 'desc' : 'asc');
+                return $query->orderBy($attribute_name, $is_descending ? 'desc' : 'asc');
             } else {
                 return response()->json(['error' => "{$attribute} is not sortable"], 400);
             }
         }
-
-        return response()->json($query->paginate(25));
     }
 
     public function show($id)
