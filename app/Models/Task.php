@@ -20,6 +20,10 @@ class Task extends Model
         'position'
     ];
 
+    public static array $sortable = [
+        'position',
+    ];
+
     public $timestamps = false;
 
     public function entries(): HasMany

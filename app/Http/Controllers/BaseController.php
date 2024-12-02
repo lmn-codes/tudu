@@ -5,15 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\stringStartsWith;
 
 class BaseController extends Controller
 {
     protected $editable_attributes = [];
     protected $model = Model::class;
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->model::paginate(25);
+        $sort_attributes = explode( ',', $request->query('sort', ''));
+        $query = $this->model::query();
+
+        foreach ($sort_attributes as $attribute) {
+            $attribute_name = preg_replace('/[^a-zA-Z]/', '', $attribute);
+
+            if (in_array($attribute_name, $this->model::$sortable)) {
+                $is_descending = str_starts_with($attribute, '-');
+                $query->orderBy($attribute_name, $is_descending ? 'desc' : 'asc');
+            } else {
+                return response()->json(['error' => "{$attribute} is not sortable"], 400);
+            }
+        }
+
+        return response()->json($query->paginate(25));
     }
 
     public function show($id)
