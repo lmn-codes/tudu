@@ -46,15 +46,17 @@ class TaskController extends BaseController
 
             $task->update(['position' => 0]);
 
-            $tasks_to_update = Task::whereBetween('position', $range)->when($original_position > $new_position,
+            $is_moving_up = $original_position > $new_position;
+
+            $tasks_to_update = Task::whereBetween('position', $range)->when($is_moving_up,
                 function (Builder $query) {
                     $query->orderBy('position', 'desc');
                 }
-            );
+            )->lockForUpdate();
 
-            $tasks_to_update->chunk(100, function (Collection $tasks) use ($original_position, $new_position) {
+            $tasks_to_update->chunk(100, function (Collection $tasks) use ($original_position, $new_position, $is_moving_up) {
                 foreach ($tasks as $task) {
-                    $task->update(['position' => $task->position + ($original_position < $new_position ? -1 : 1)]);
+                    $task->update(['position' => $task->position + ($is_moving_up ? 1 : -1)]);
                 }
             });
 
