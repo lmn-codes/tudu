@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Task::class);
             $table->foreignIdFor(Day::class);
-            $table->integer('priority')->nullable();
+            $table->integer('position')->nullable();
             $table->unique('task_id', 'day_id');
         });
     }

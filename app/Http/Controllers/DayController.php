@@ -37,11 +37,21 @@ class DayController extends Controller
             DayTask::create([
                 'day_id' => $day->id,
                 'task_id' => $request_task['id'],
-                'priority' => $request_task['priority'] ?? null
+                'position' => $request_task['position'] ?? null
             ]);
         }
         DB::commit();
 
         return response(null, 200);
+    }
+
+    public function getToday() {
+        $today = Day::whereDate('created_at', Carbon::now()->toDateString())->first();
+
+        if (!$today) {
+            return response(null, 404);
+        }
+
+        return response(new \App\Http\Resources\Day($today), 200);
     }
 }

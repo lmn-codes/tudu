@@ -13,13 +13,8 @@ class Day extends Model
 
     public $timestamps = false;
 
-    public function day_tasks(): HasMany
+    public function dayTasks(): HasMany
     {
         return $this->hasMany(DayTask::class);
-    }
-
-    public function tasks(): Collection
-    {
-        return $this->dayTask()->tasks();
     }
 }

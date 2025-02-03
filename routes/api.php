@@ -27,6 +27,7 @@ Route::controller(TaskEntryController::class)->group(function () {
 });
 
 Route::controller(DayController::class)->group(function () {
+    Route::get('/today', 'getToday');
     Route::post('/days', 'create');
     Route::put('/days/{day_id}/tasks', 'editTasks');
 });

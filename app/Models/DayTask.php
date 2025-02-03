@@ -11,7 +11,7 @@ class DayTask extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['day_id', 'task_id', 'priority'];
+    protected $fillable = ['day_id', 'task_id', 'position'];
 
     public $timestamps = false;
 

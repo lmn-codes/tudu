@@ -19,7 +19,7 @@ class TaskFactory extends Factory
         return [
             'title' => fake()->text(50),
             'description' => fake()->text(100),
-            'priority' => fake()->unique()->randomNumber()
+            'position' => fake()->unique()->randomNumber()
         ];
     }
 }
